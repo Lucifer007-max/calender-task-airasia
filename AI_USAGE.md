@@ -54,10 +54,5 @@ AI accelerated development speed but implementation, validation, debugging, and 
 Final system delivered:
 
 - Multi Provider Aggregation
-- Async Processing
-- Redis Cache
-- Pub/Sub Updates
 - Currency Support
 - Load Testing
-- Circuit Breaker
-- Thundering Herd Protection
