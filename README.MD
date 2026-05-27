@@ -222,7 +222,12 @@ docker build -t lowfare-calendar:latest .
 docker run -p 8080:8080 lowfare-calendar:latest
 ```
 
-## Running Tests
+
+## Test Latency
+
+Run load-test.js
+
+cmd: `k6 run load-test.js`
 
 The project includes comprehensive unit tests for core services:
 
@@ -244,29 +249,6 @@ The project includes comprehensive unit tests for core services:
 - `PriceSoldOutConsumerTest.java` - Pub/Sub consumer event handling
 - `LowfareCalendarApplicationTests.java` - Application context and integration tests
 
-## Architecture
-
-### Multi-Provider Aggregation
-The `AggregationService` uses `CompletableFuture` for parallel fetching from three providers:
-1. Fetches fares from Provider A, B, and C concurrently
-2. Aggregates all results into a single collection
-3. Applies `Math.min()` to find the lowest fare for each date
-4. Returns sorted results by date
-
-### Caching Strategy
-- Redis caches frequently accessed calendar data
-- Reduces database queries and provider API calls
-- Configurable TTL for cache expiration
-
-### Resilience
-- Circuit breaker pattern via Resilience4j
-- Prevents cascading failures when providers are down
-- 50% failure rate threshold with 5-second wait duration
-
-### Event-Driven Architecture
-- Google Cloud Pub/Sub for asynchronous event processing
-- Handles price sold-out events
-- Decouples components for better scalability
 
 ## Monitoring & Health
 
@@ -275,10 +257,6 @@ The `AggregationService` uses `CompletableFuture` for parallel fetching from thr
 - `/actuator/metrics` - Application metrics
 - `/actuator/env` - Environment properties
 
-### Health Indicators
-- Redis connection status
-- Database connectivity
-- Application initialization status
 
 ## Environment Variables
 
@@ -327,32 +305,11 @@ sh  ./run.sh
 3. **Circuit Breaker:** Prevents unnecessary calls to failing providers
 4. **Batch Processing:** Efficient fare aggregation using streams
 
-## Future Enhancements
-
-- Support for additional airline providers
-- Advanced filtering and sorting options
-- Historical fare tracking
-- Price alert notifications
-- Analytics and reporting dashboards
-- Rate limiting and API authentication
-
-## Contributing
-
-1. Create a feature branch
-2. Make changes and add tests
-3. Run full test suite: `./mvnw clean test`
-4. Ensure code coverage meets standards
-5. Submit pull request
 
 ## License
 This project is proprietary software for AirAsia. All rights reserved.
 
 
-## Test Latency
-
-Run load-test.js
-
-cmd: `k6 run load-test.js`
 
 ---
 

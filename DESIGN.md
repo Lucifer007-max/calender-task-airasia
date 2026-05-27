@@ -242,7 +242,32 @@ EventStateService
 
 ---
 
-# 5. Class Responsibilities
+# 5. Architecture
+
+### Multi-Provider Aggregation
+The `AggregationService` uses `CompletableFuture` for parallel fetching from three providers:
+1. Fetches fares from Provider A, B, and C concurrently
+2. Aggregates all results into a single collection
+3. Applies `Math.min()` to find the lowest fare for each date
+4. Returns sorted results by date
+
+### Caching Strategy
+- Redis caches frequently accessed calendar data
+- Reduces database queries and provider API calls
+- Configurable TTL for cache expiration
+
+### Resilience
+- Circuit breaker pattern via Resilience4j
+- Prevents cascading failures when providers are down
+- 50% failure rate threshold with 5-second wait duration
+
+### Event-Driven Architecture
+- Google Cloud Pub/Sub for asynchronous event processing
+- Handles price sold-out events
+- Decouples components for better scalability
+
+
+# 6. Class Responsibilities
 
 ## CalendarController
 
@@ -362,7 +387,7 @@ consume()
 
 ---
 
-# 6. Design Patterns
+# 7. Design Patterns
 
 ---
 
@@ -440,7 +465,7 @@ Consumer
 
 ---
 
-# 7. Currency Strategy
+# 8. Currency Strategy
 
 Flow:
 
@@ -462,7 +487,7 @@ MYR / THB
 
 ---
 
-# 8. Event Flow
+# 9. Event Flow
 
 ```text
 Price Sold Out
@@ -490,7 +515,7 @@ Next Request Refresh
 
 ---
 
-# 9. Performance Decisions
+# 10. Performance Decisions
 
 Target:
 
@@ -509,7 +534,7 @@ Optimization:
 
 ---
 
-# 10. Testing
+# 11. Testing
 
 Covered:
 
