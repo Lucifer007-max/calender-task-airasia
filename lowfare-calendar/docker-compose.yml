@@ -1,0 +1,41 @@
+services:
+
+  app:
+
+    build: .
+
+    container_name: lowfare
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - redis
+      - pubsub
+
+    environment:
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      PUBSUB_EMULATOR_HOST: pubsub:8085
+
+  redis:
+    image: redis:7
+    container_name: lowfare-redis
+    ports:
+      - "6379:6379"
+
+  pubsub:
+    image: gcr.io/google.com/cloudsdktool/google-cloud-cli
+    container_name: lowfare-pubsub
+    command:
+      [
+        "gcloud",
+        "beta",
+        "emulators",
+        "pubsub",
+        "start",
+        "--host-port=0.0.0.0:8085"
+      ]
+
+    ports:
+      - "8085:8085"

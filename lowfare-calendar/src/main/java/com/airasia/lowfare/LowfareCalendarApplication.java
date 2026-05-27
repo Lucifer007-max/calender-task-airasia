@@ -1,4 +1,4 @@
-package com.airasia.lowfare_calendar;
+package com.airasia.lowfare;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
