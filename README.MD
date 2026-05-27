@@ -166,40 +166,11 @@ resilience4j.circuitbreaker.instances.providerA.sliding-window-size=5
 
 ## Installation & Setup
 
-### Local Development (Without Docker)
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd airasia-low-fare-calendar/lowfare-calendar
-   ```
-
-2. **Start Redis locally:**
-   ```bash
-   redis-server
-   ```
-
-3. **Start Google Cloud Pub/Sub Emulator (in another terminal):**
-   ```bash
-   gcloud beta emulators pubsub start --host-port=0.0.0.0:8085
-   ```
-
-4. **Build and run the application:**
-   ```bash
-   ./mvnw clean install
-   ./mvnw spring-boot:run
-   ```
-
-5. **Verify the application:**
-   ```bash
-   curl http://localhost:8080/actuator/health
-   ```
-
 ### Docker Deployment
 
 1. **Build and start all services:**
    ```bash
-   ./run.sh
+   sh ./run.sh
    ```
 
    This script:
@@ -376,10 +347,6 @@ sh  ./run.sh
 ## License
 
 This project is proprietary software for AirAsia. All rights reserved.
-
-## Support
-
-For issues, questions, or contributions, please contact the development team.
 
 
 ## Test Latency
