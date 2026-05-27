@@ -1,18 +1,20 @@
 package com.airasia.lowfare;
 
+import com.airasia.lowfare.cache.CacheService;
+import com.airasia.lowfare.dto.CalendarResponse;
 import com.airasia.lowfare.dto.DayFare;
 
-import com.airasia.lowfare.service.*;
-
-import com.airasia.lowfare.dto.CalendarResponse;
+import com.airasia.lowfare.service.AggregationService;
+import com.airasia.lowfare.service.CalendarService;
+import com.airasia.lowfare.service.CurrencyService;
 
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.mockito.Mockito.*;
 
 class CalendarServiceCacheTest {
 
@@ -28,6 +30,27 @@ class CalendarServiceCacheTest {
                 mock(
                         CurrencyService.class
                 );
+
+        CacheService cache =
+                mock(
+                        CacheService.class
+                );
+
+
+        when(
+
+                cache.get(
+
+                        anyString()
+
+                )
+
+        )
+
+        .thenReturn(
+                null
+        );
+
 
         when(
 
@@ -52,6 +75,7 @@ class CalendarServiceCacheTest {
 
         );
 
+
         when(
 
                 currency.convert(
@@ -65,8 +89,11 @@ class CalendarServiceCacheTest {
         )
 
         .thenReturn(
+
                 200
+
         );
+
 
         CalendarService service =
 
@@ -74,9 +101,12 @@ class CalendarServiceCacheTest {
 
                         aggregation,
 
-                        currency, null
+                        currency,
+
+                        cache
 
                 );
+
 
         CalendarResponse response =
 
@@ -92,6 +122,7 @@ class CalendarServiceCacheTest {
 
                 );
 
+
         assertEquals(
 
                 1,
@@ -101,6 +132,7 @@ class CalendarServiceCacheTest {
                         .size()
 
         );
+
 
         verify(
 
@@ -113,6 +145,21 @@ class CalendarServiceCacheTest {
         )
 
         .getLowestFares();
+
+
+        verify(
+
+                cache
+
+        )
+
+        .put(
+
+                anyString(),
+
+                any()
+
+        );
 
     }
 

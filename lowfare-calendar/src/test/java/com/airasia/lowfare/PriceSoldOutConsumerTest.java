@@ -15,49 +15,17 @@ class PriceSoldOutConsumerTest {
     @Test
     void shouldInvalidateCacheOnEvent() {
 
-        CacheService cache =
+        CacheService cache = mock(CacheService.class);
 
-                mock(
-                        CacheService.class
-                );
+        EventStateService state = new EventStateService();
 
-        EventStateService state =
+        PriceSoldOutConsumer consumer = new PriceSoldOutConsumer( cache,  state);
 
-                new EventStateService();
+        consumer.consume( "event-1", "DEL-BKK", 2L);
 
-        PriceSoldOutConsumer consumer =
+        verify( cache, times(1))
 
-                new PriceSoldOutConsumer(
-
-                        cache,
-
-                        state
-
-                );
-
-        consumer.consume(
-
-                "event-1",
-
-                "DEL-BKK",
-
-                2L
-
-        );
-
-        verify(
-
-                cache,
-
-                times(1)
-
-        )
-
-        .evict(
-
-                any()
-
-        );
+        .evict(any());
 
     }
 
