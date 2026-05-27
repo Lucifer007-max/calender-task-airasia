@@ -275,12 +275,6 @@ The application includes mock provider data in JSON format for local testing:
 
 These mock files are copied into the Docker image for development and testing.
 
-## Common Tasks
-
-cd  /lowfare-calender
-sh  ./run.sh
-
-
 ## Troubleshooting
 
 ### Connection Issues
