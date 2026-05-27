@@ -345,7 +345,6 @@ sh  ./run.sh
 5. Submit pull request
 
 ## License
-
 This project is proprietary software for AirAsia. All rights reserved.
 
 
